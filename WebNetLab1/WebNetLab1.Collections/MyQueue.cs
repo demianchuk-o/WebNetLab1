@@ -2,7 +2,7 @@
 
 namespace WebNetLab1.Collections;
 
-public class MyQueue<T>
+public class MyQueue<T> : IEnumerable<T>
 {
     private MyQueueNode? _head;
     private MyQueueNode? _tail;
@@ -19,6 +19,21 @@ public class MyQueue<T>
         {
             Enqueue(item);
         }
+    }
+    
+    public IEnumerator<T> GetEnumerator()
+    {
+        var current = _head;
+        while (current is not null)
+        {
+            yield return current.Data;
+            current = current.Next;
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
     
     public void Enqueue(T item)
