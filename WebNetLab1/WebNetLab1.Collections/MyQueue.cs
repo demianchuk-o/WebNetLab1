@@ -39,7 +39,7 @@ public class MyQueue<T>
     {
         if (_head is null)
         {
-            throw new InvalidOperationException("The queue is empty.");
+            ThrowForEmptyQueue();
         }
         
         var removedData = _head.Data;
