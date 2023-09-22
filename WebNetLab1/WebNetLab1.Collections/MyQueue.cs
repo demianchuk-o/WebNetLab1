@@ -48,7 +48,21 @@ public class MyQueue<T>
 
         return removedData;
     }
-    
+
+    public T Peek()
+    {
+        if (_head is null)
+        {
+            ThrowForEmptyQueue();
+        }
+
+        return _head.Data;
+    }
+
+    private void ThrowForEmptyQueue()
+    {
+        throw new InvalidOperationException("The queue is empty.");
+    }
     private class MyQueueNode
     {
         public T Data { get; }
