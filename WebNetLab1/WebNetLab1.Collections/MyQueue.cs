@@ -57,19 +57,8 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
         {
             ThrowForEmptyQueue();
         }
-        
-        var removedData = _head.Data;
 
-        if (_head == _tail)
-        {
-            _head = null;
-            _tail = null;
-        }
-        else
-        {
-            _head = _head.Next;
-        }
-        
+        var removedData = HandleDequeue();
 
         return removedData;
     }
@@ -82,16 +71,7 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
             return false;
         }
 
-        result = _head.Data;
-        if (_head == _tail)
-        {
-            _head = null;
-            _tail = null;
-        }
-        else
-        {
-            _head = _head.Next;
-        }
+        result = HandleDequeue();
         return true;
     }
 
@@ -120,6 +100,23 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
     private void ThrowForEmptyQueue()
     {
         throw new InvalidOperationException("The queue is empty.");
+    }
+
+    private T HandleDequeue()
+    {
+        var dequeuedData = _head.Data;
+
+        if (_head == _tail)
+        {
+            _head = null;
+            _tail = null;
+        }
+        else
+        {
+            _head = _head.Next;
+        }
+
+        return dequeuedData;
     }
     private class MyQueueNode
     {
