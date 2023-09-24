@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 
 namespace WebNetLab1.Collections;
 
@@ -73,6 +74,19 @@ public class MyQueue<T> : IEnumerable<T>
         return removedData;
     }
 
+    public bool TryDequeue([MaybeNullWhen(false)] out T result)
+    {
+        if (_head is null)
+        {
+            result = default;
+            return false;
+        }
+
+        result = _head.Data;
+        _head = _head.Next;
+        return true;
+    }
+
     public T Peek()
     {
         if (_head is null)
@@ -81,6 +95,18 @@ public class MyQueue<T> : IEnumerable<T>
         }
 
         return _head.Data;
+    }
+
+    public bool TryPeek([MaybeNullWhen(false)] out T result)
+    {
+        if (_head is null)
+        {
+            result = default;
+            return false;
+        }
+
+        result = _head.Data;
+        return true;
     }
 
     private void ThrowForEmptyQueue()
