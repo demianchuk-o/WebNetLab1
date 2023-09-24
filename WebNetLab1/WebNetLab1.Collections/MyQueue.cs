@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace WebNetLab1.Collections;
 
-public class MyQueue<T> : IEnumerable<T>
+public class MyQueue<T> : IEnumerable<T>, ICollection
 {
     private MyQueueNode? _head;
     private MyQueueNode? _tail;
@@ -83,7 +83,15 @@ public class MyQueue<T> : IEnumerable<T>
         }
 
         result = _head.Data;
-        _head = _head.Next;
+        if (_head == _tail)
+        {
+            _head = null;
+            _tail = null;
+        }
+        else
+        {
+            _head = _head.Next;
+        }
         return true;
     }
 
