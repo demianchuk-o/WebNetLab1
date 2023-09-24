@@ -22,6 +22,101 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
         }
     }
     
+    public int Count
+    {
+        get
+        {
+            int count = 0;
+            var current = _head;
+            while (current is not null)
+            {
+                count++;
+                current = current.Next;
+            }
+
+            return count;
+        }
+    }
+
+    public bool IsSynchronized => false;
+    public object SyncRoot => this;
+    
+    public void CopyTo(T[] array, int arrayIndex)
+    {
+        if (array is null)
+        {
+            throw new ArgumentNullException(nameof(array));
+        }
+
+        if (arrayIndex < 0 || arrayIndex > array.Length)
+        {
+            throw new ArgumentOutOfRangeException(nameof(arrayIndex), arrayIndex,
+                "Index is out of bounds of this array.");
+        }
+
+        if (array.Length - arrayIndex < Count)
+        {
+            throw new ArgumentException("There's not enough space to copy into this range of an array.");
+        }
+
+        if (Count == 0)
+        {
+            return;
+        }
+
+        var current = _head;
+        int index = arrayIndex;
+        while (current is not null)
+        {
+            array[index] = current.Data;
+            index++;
+            current = current.Next;
+        }
+    }
+
+    void ICollection.CopyTo(Array array, int arrayIndex)
+    {
+        if (array is null)
+        {
+            throw new ArgumentNullException(nameof(array));
+        }
+
+        if (array.Rank != 1)
+        {
+            throw new ArgumentException("The array has an invalid rank.");
+        }
+
+        if (array.GetLowerBound(0) != 0)
+        {
+            throw new ArgumentException("The array must have a lower bound of 0.");
+        }
+        
+        if (arrayIndex < 0 || arrayIndex > array.Length)
+        {
+            throw new ArgumentOutOfRangeException(nameof(arrayIndex), arrayIndex,
+                "Index is out of bounds of this array.");
+        }
+        
+        if (array.Length - arrayIndex < Count)
+        {
+            throw new ArgumentException("There's not enough space to copy into this range of an array.");
+        }
+        
+        if (Count == 0)
+        {
+            return;
+        }
+        
+        var current = _head;
+        int index = arrayIndex;
+        while (current is not null)
+        {
+            array.SetValue(current.Data, index);
+            index++;
+            current = current.Next;
+        }
+    }
+    
     public IEnumerator<T> GetEnumerator()
     {
         var current = _head;
