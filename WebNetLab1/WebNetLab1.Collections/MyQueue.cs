@@ -74,6 +74,12 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
         }
     }
 
+    public void Clear()
+    {
+        _head = null;
+        _tail = null;
+    }
+    
     void ICollection.CopyTo(Array array, int arrayIndex)
     {
         if (array is null)
@@ -192,6 +198,41 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
         return true;
     }
 
+    public bool Contains(T item)
+    {
+        var current = _head;
+        while (current is not null)
+        {
+            if (current.Data.Equals(item))
+            {
+                return true;
+            }
+
+            current = current.Next;
+        }
+
+        return false;
+    }
+
+    public T[] ToArray()
+    {
+        if (Count == 0)
+        {
+            return Array.Empty<T>();
+        }
+
+        var array = new T[Count];
+
+        var current = _head;
+        int index = 0;
+        while (current is not null)
+        {
+            array[index] = current.Data;
+            current = current.Next;
+        }
+
+        return array;
+    }
     private void ThrowForEmptyQueue()
     {
         throw new InvalidOperationException("The queue is empty.");
