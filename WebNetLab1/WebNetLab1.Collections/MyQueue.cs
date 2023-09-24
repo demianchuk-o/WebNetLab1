@@ -59,7 +59,16 @@ public class MyQueue<T> : IEnumerable<T>
         
         var removedData = _head.Data;
 
-        _head = _head.Next;
+        if (_head == _tail)
+        {
+            _head = null;
+            _tail = null;
+        }
+        else
+        {
+            _head = _head.Next;
+        }
+        
 
         return removedData;
     }
