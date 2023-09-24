@@ -156,7 +156,7 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
     {
         if (_head is null)
         {
-            ThrowForEmptyQueue();
+            throw new InvalidOperationException("The queue is empty.");
         }
 
         var removedData = HandleDequeue();
@@ -180,7 +180,7 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
     {
         if (_head is null)
         {
-            ThrowForEmptyQueue();
+            throw new InvalidOperationException("The queue is empty.");
         }
 
         return _head.Data;
@@ -232,10 +232,6 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
         }
 
         return array;
-    }
-    private void ThrowForEmptyQueue()
-    {
-        throw new InvalidOperationException("The queue is empty.");
     }
 
     private T HandleDequeue()
