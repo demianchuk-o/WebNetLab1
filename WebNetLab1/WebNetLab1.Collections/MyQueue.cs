@@ -240,6 +240,7 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
         while (current is not null)
         {
             array[index] = current.Data;
+            index++;
             current = current.Next;
         }
 
