@@ -206,7 +206,7 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
         }
 
         result = _head.Data;
-        OnPeek(new PeekEventArgs<T>("\"An element was retrieved from TryPeek method.", result));
+        OnPeek(new PeekEventArgs<T>("An element was retrieved from TryPeek method.", result));
         return true;
     }
 
