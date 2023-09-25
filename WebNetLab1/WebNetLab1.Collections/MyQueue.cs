@@ -20,6 +20,10 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
 
     public MyQueue(IEnumerable<T> source)
     {
+        if (source is null)
+        {
+            throw new ArgumentNullException(nameof(source));
+        }
         foreach (var item in source)
         {
             Enqueue(item);
