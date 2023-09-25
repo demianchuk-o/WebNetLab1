@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
+using WebNetLab1.Collections.EventArgs;
 
 namespace WebNetLab1.Collections;
 
@@ -8,6 +9,9 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
     private MyQueueNode? _head;
     private MyQueueNode? _tail;
 
+    public event EventHandler<PeekEventArgs<T>> PeekEvent;
+    public event EventHandler<QueueEmptyEventArgs> QueueEmptyEvent;
+    
     public MyQueue()
     {
         _head = null;
@@ -78,6 +82,7 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
     {
         _head = null;
         _tail = null;
+        OnQueueEmpty(new QueueEmptyEventArgs("A queue was cleared."));
     }
     
     void ICollection.CopyTo(Array array, int arrayIndex)
@@ -183,7 +188,9 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
             throw new InvalidOperationException("The queue is empty.");
         }
 
-        return _head.Data;
+        var result = _head.Data;
+        OnPeek(new PeekEventArgs<T>("An element was retrieved from Peek method.", result));
+        return result;
     }
 
     public bool TryPeek([MaybeNullWhen(false)] out T result)
@@ -195,6 +202,7 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
         }
 
         result = _head.Data;
+        OnPeek(new PeekEventArgs<T>("\"An element was retrieved from TryPeek method.", result));
         return true;
     }
 
@@ -242,6 +250,8 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
         {
             _head = null;
             _tail = null;
+            
+            OnQueueEmpty(new QueueEmptyEventArgs("The last element was dequeued."));
         }
         else
         {
@@ -249,6 +259,15 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
         }
 
         return dequeuedData;
+    }
+
+    private void OnQueueEmpty(QueueEmptyEventArgs e)
+    {
+        QueueEmptyEvent?.Invoke(this, e);
+    }
+    private void OnPeek(PeekEventArgs<T> e)
+    {
+        PeekEvent?.Invoke(this, e);
     }
     private class MyQueueNode
     {
