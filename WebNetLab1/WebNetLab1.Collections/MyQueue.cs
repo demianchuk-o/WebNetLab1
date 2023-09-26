@@ -235,14 +235,7 @@ public class MyQueue<T> : IEnumerable<T>, ICollection
 
         var array = new T[Count];
 
-        var current = _head;
-        int index = 0;
-        while (current is not null)
-        {
-            array[index] = current.Data;
-            index++;
-            current = current.Next;
-        }
+        CopyTo(array, 0);
 
         return array;
     }
