@@ -15,4 +15,8 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\WebNetLab1.Collections\WebNetLab1.Collections.csproj" />
+    </ItemGroup>
+
 </Project>
