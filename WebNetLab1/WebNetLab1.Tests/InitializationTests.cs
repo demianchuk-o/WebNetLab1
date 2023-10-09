@@ -25,6 +25,9 @@ public class InitializationTests
     [Fact]
     public void CtorWithSource_WhenEmptySource_ThenThrowArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>((() => { var queue = new MyQueue<int>(null);}));
+        Assert.Throws<ArgumentNullException>(() =>
+        {
+            var queue = new MyQueue<int>(null);
+        });
     }
 }
