@@ -40,4 +40,14 @@ public class DequeueTests
 
         Assert.Throws<InvalidOperationException>(() => queue.Dequeue());
     }
+    
+    [Theory]
+    [ClassData(typeof(MultipleItemsQueueData))]
+    public void Dequeue_WhenQueueCleared_ThenThrowInvalidOperationException<T>(T[] items)
+    {
+        var queue = new MyQueue<T>(items);
+        queue.Clear();
+
+        Assert.Throws<InvalidOperationException>(() => queue.Dequeue());
+    }
 }
