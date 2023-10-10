@@ -85,7 +85,9 @@ public class DequeueTests
     {
         var queue = new MyQueue<int>();
 
-        Assert.False(queue.TryDequeue(out var dequeuedItem));
+        var dequeuedResult = queue.TryDequeue(out var dequeuedItem);
+        
+        Assert.False(dequeuedResult);
         Assert.Equal(default, dequeuedItem);
     }
     
@@ -96,7 +98,9 @@ public class DequeueTests
         var queue = new MyQueue<T>(items);
         queue.Clear();
 
-        Assert.False(queue.TryDequeue(out var dequeuedItem));
+        var dequeuedResult = queue.TryDequeue(out var dequeuedItem);
+        
+        Assert.False(dequeuedResult);
         Assert.Equal(default, dequeuedItem);
     }
 }
