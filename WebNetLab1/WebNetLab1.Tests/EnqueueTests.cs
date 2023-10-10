@@ -9,7 +9,7 @@ public class EnqueueTests
     
     [Theory]
     [ClassData(typeof(MultipleItemsQueueData))]
-    public void Enqueue_WhenEmptyQueue_ShouldAddItems<T>(T[] items)
+    public void Enqueue_WhenEmptyQueue_ThenAddItems<T>(T[] items)
     {
         var queue = new MyQueue<T>();
 
@@ -23,7 +23,7 @@ public class EnqueueTests
 
     [Theory]
     [ClassData(typeof(MultipleItemsQueueData))]
-    public void Enqueue_WhenNonEmptyQueue_ShouldAddItems<T>(T[] items)
+    public void Enqueue_WhenNonEmptyQueue_ThenAddItems<T>(T[] items)
     {
         var queue = new MyQueue<T>(items);
 
