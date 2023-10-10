@@ -34,4 +34,19 @@ public class EnqueueTests
         
         Assert.Equal(items.Length * 2, queue.Count);
     }
+
+    [Theory]
+    [ClassData(typeof(MultipleItemsQueueData))]
+    public void Enqueue_WhenQueueCleared_ThenAddItems<T>(T[] items)
+    {
+        var queue = new MyQueue<T>(items);
+        queue.Clear();
+
+        foreach (var item in items)
+        {
+            queue.Enqueue(item);
+        }
+        
+        Assert.Equal(items, queue);
+    }
 }
