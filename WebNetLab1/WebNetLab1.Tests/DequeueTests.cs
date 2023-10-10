@@ -81,20 +81,22 @@ public class DequeueTests
     }
     
     [Fact]
-    public void TryDequeue_WhenEmptyQueue_ThenReturnFalse()
+    public void TryDequeue_WhenEmptyQueue_ThenReturnFalseAndDefault()
     {
         var queue = new MyQueue<int>();
 
-        Assert.False(queue.TryDequeue(out _));
+        Assert.False(queue.TryDequeue(out var dequeuedItem));
+        Assert.Equal(default, dequeuedItem);
     }
     
     [Theory]
     [ClassData(typeof(MultipleItemsQueueData))]
-    public void TryDequeue_WhenQueueCleared_ThenReturnFalse<T>(T[] items)
+    public void TryDequeue_WhenQueueCleared_ThenReturnFalseAndDefault<T>(T[] items)
     {
         var queue = new MyQueue<T>(items);
         queue.Clear();
 
-        Assert.False(queue.TryDequeue(out _));
+        Assert.False(queue.TryDequeue(out var dequeuedItem));
+        Assert.Equal(default, dequeuedItem);
     }
 }
